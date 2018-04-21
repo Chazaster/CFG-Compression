@@ -8,15 +8,7 @@ def repair(input):
 
 def main():
     string = input("Enter a single string of any length using lowercase characters in the language {a - z}")
-    choice = int(input("Enter 1 for Sequitur and 2 for Re-Pair"))
+    sequitur(string)
+    repair(string)
 
-    if (choice == 1):
-        sequitur(string)
-
-    elif (choice == 2):
-        repair(string)
-
-    else:
-        print("Invalid Number")
-
-    main()
+main()
