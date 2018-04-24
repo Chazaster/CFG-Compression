@@ -1,16 +1,17 @@
 # Chase Watson, Adam May, Matt Mulkeen
 ''''
-Questions to ask Ravi:
+Questions:
     1. Are the replace functions for sequitur and repair the same
     or does repair have a different replace function than sequitur?
 
     2. How do you implement the Linked List, Hash Table, and Priority
     Queue for the Repair replace function as described in the slides?
 
-    3. What is the runtime for sequitur?
+    3. What is the runtime for sequitur and re-pair?
+        O(√n)
 
     4. How would you Zero-order compress (Huffman Encoding)
-     the string after finding all pairs for Re-pair?
+    the string after finding all pairs for Re-pair?
 '''
 
 import queue
