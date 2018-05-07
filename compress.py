@@ -1,20 +1,79 @@
 # Chase Watson, Adam May, Matt Mulkeen
-''''
-Questions:
-    1. Are the replace functions for sequitur and repair the same
-    or does repair have a different replace function than sequitur?
+import queue as queue
 
-    2. How do you implement the Linked List, Hash Table, and Priority
-    Queue for the Repair replace function as described in the slides?
+def substring(string):
+  if len(string) < 4:
+    return ""
+  for i in range(len(string)-1):
+    temp = string[i] + string[i+1]
+    if string[i+2:].find(temp) != -1:
+      return temp
+  return ""
 
-    3. What is the runtime for sequitur and re-pair?
-        O(√n)
+def rule_utility(s, rules):
+    arr = []
+    for i in range( len(rules) ):
+        count = 0
+        for j in range( len(s) ):
+            if s[j] == rules[i][0]:
+                count += 1
+        for rl in rules:
+            for k in range( len(rl[1]) ):
+                if rl[1][k] == rules[i][0]:
+                    count += 1
+        if count < 2:
+            arr.append(i)
 
-    4. How would you Zero-order compress (Huffman Encoding)
-    the string after finding all pairs for Re-pair?
-'''
+    for i in range( len(arr) ):
+        char = rules[arr[i]][0]
+        pair = rules[arr[i]][1]
+        s.replace(pair, char)
+        for n in range( len(rules) ):
+            rules[n][1] = rules[n][1].replace(char, pair)
+        rules = rules[:arr[i]] + rules[arr[i]+1:]
+        for j in range( len(arr[i:]) ):
+            arr[j + i] -= 1
 
-import queue
+    return s, rules
+
+def seq(s, string, nonTerminals, rules):
+    if string == "" and done(s):
+        s, rules = rule_utility(s, rules)
+        return s, rules
+
+    if len(string) > 0:
+        s += string[0]
+        string = string[1:]
+
+    pair = substring(s) #largest_substring_algo1(s)
+
+    if pair == "":
+        for rule, thing in rules:
+            if s.find(thing) != -1:
+                pair = thing
+                s = s.replace(pair, rule)
+                return seq(s, string, nonTerminals, rules)
+
+    elif len(pair) is not 0:
+        s = s.replace(pair, nonTerminals[0])
+        rules.append([nonTerminals[0], pair])
+        nonTerminals.pop(0)
+        return seq(s, string, nonTerminals, rules)
+
+
+    return seq(s, string, nonTerminals, rules)
+
+def tmpArray(pairArray):
+    print("GOT TO TMPARRAY")
+    print(pairArray)
+    pairArray.pop(0)
+    return pairArray
+
+def done(string):
+    pair = substring(string)
+    if len(pair) is not 0:
+        return False
+    return True
 
 # Function to create pairs from the inputted string
 def createPairs(string):
@@ -58,18 +117,22 @@ def pairFrequency(pairs):
             del tempArray[:]
     return q
 
-def sequitur(input):
-    return input
-
 def repair(pairs, queue):
     return input
 
 def main():
-    string = input("Enter a single string of any length using lowercase characters in the language {a - z}: ")
-    seq = sequitur(string)
-    print("After Sequitur: " + seq)
-    pairs = createPairs(string)
-    queue = pairFrequency(pairs)
-    #re = repair(pairs, queue)
-    #print("After Re-Pair: " + re)
+    nonTerminals = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    nonTerms = []
+    for i in range(len(nonTerminals)):
+        nonTerms.append(nonTerminals[i])
+    str = input("Enter a single string of any length using lowercase characters in the language {a - z}: ")
+    pairs = createPairs(str)
+    rules = []
+    S, rules = seq("", str, nonTerms, rules)
+
+    print()
+    print("Sequitur Compression:")
+    print("S ->", S)
+    for rule in rules:
+        print(rule[0] + " -> " + rule[1])
 main()
