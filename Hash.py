@@ -8,19 +8,22 @@ class HashTable:
     # For the hashing function, we get the ASCII value of each
     # character in the pair and mod that with the table size.
     # Since the Hash Table is initialized as a list of lists,
-    # pairs would be mapped to the same entry in the table
+    # similar pairs would be mapped to the same entry in the table
     def _get_hash(self, key):
         hash = 0
+        # To prevent 'be' and 'eb' from existing in the same sublist,
+        # we grab the ASCII value of the first element in the string
+        # and add it to the resulting hash value before it is modded
+        temp = ord(key[0])
         for char in str(key):
             hash += ord(char)
+        hash += temp
         return hash % self.size
-
 
     def add(self, key):
         # Get the index of the entry using the hash function
         key_hash = self._get_hash(key)
         key_value = [key]
-
         # Check to see if the cell in the table is empty or not
         if self.table[key_hash] is None:
             # Might make list of a list of a list here, might change

@@ -112,7 +112,8 @@ def done(string):
         return False
     return True
 
-# Use list comprehension to access values in individual tuples
+# FUNCTIONS FOR RE-PAIR
+# Use list comprehension to access values and build LL
 def buildLL(string):
     LL = LinkedList()
     for i in range (len(string)):
@@ -130,7 +131,9 @@ def buildPairs(LL, n, size):
     i = 0
     while (i != LL.__len__() - 1):
         temp = str(current) + str(next)
-        pairs = temp[:2] + temp[4:]
+        # This gets rid of useless and mysterious
+        # backslashes within the concatenated string
+        pairs = temp[1:2] + temp[4:5]
         hash.add(pairs)
         i += 1
         current = next
