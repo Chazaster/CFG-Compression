@@ -138,18 +138,58 @@ def buildPairs(LL):
         next = LL._next(current)
     return hash, hashArray
 
-# Now find the pairs that occur >= √n times and place in queue
+# Now find the pairs that occur >= √n times and place in priority queue
 def populateQueue(hash, n, hashArray):
-    q = queue.Queue()
+    q = queue.PriorityQueue()
+    size = 0
     # Set removes any duplicates from the array, doing this because we
     # get all entries of the same hash from the hash table
     hashArray = list(set(hashArray))
     for i in range (len(hashArray)):
         temp = hashArray[i]
         s = hash.get(temp)
-        if (len(s) >= n):
+        if (len(s) >= n and len(s) != 1):
             q.put(s)
-    return q
+        # Gets the number of times a pair has been seen the most in the hash table
+        # This is sent to the buildRule function for further implementation
+        if (len(s) > size):
+            size = len(s)
+    return q, size
+
+def getPair(hash, queue, nonTerms, hashArray, size):
+    # NEEDS TO BE TESTED THOROUGHLY
+    # If there is nothing in the queue, go through the hash table
+    # finding the first pair without a non terminal
+    if queue.empty() and size >= 2:
+        priority = False
+        hashArray = list(set(hashArray))
+        for i in range(len(hashArray)):
+            temp = hashArray[i]
+            s = hash.get(temp)
+            for i in range (len(s)):
+                for j in range (len(nonTerms)):
+                    if s[i] != nonTerms[j]:
+                        priority = True
+                    else:
+                        priority = False
+            if priority == True:
+                rule = cleanRule(s)
+                return rule
+    # If the queue is not empty, then take the first item in the priority queue
+    else:
+        item = queue.get()
+        rule = cleanRule(item)
+        return rule
+
+# Pulls out individual pair from passed hash table sublist
+def cleanRule(rule):
+    clean = ""
+    i = 0
+    while (i != 1):
+        for j in rule[i]:
+            clean += j
+            i += 1
+    return clean
 
 def main():
     num = int(input("Enter 1 for Sequitur or 2 for Re-Pair: "))
@@ -169,10 +209,22 @@ def main():
             print(rule[0] + " -> " + rule[1])
 
     elif (num == 2):
-        n = int(math.sqrt(len(str)))
-        LL = buildLL(str)
-        hashTable, hashArray = buildPairs(LL)
-        q = populateQueue(hashTable, n, hashArray)
+        for i in range (len(str)):
+            n = int(math.sqrt(len(str)))
+            LL = buildLL(str)
+            hashTable, hashArray = buildPairs(LL)
+            q, size = populateQueue(hashTable, n, hashArray)
+            if (q.empty() and size <= 1):
+                print()
+                print("Re-Pair Compression:")
+                print("S ->", str)
+                for rule in rules:
+                    print(rule)
+                return str, rules
+            pair = getPair(hashTable, q, nonTerms, hashArray, size)
+            rule = nonTerms[i] + " -> " + pair
+            rules.append(rule)
+            str = str.replace(pair, nonTerms[i])
 
     else:
         print("Wrong number entered")
