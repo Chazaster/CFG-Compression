@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d201db58-84b3-4cf2-a1e0-09dd98172ec9" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Hash.py" afterPath="$PROJECT_DIR$/Hash.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/compress.py" afterPath="$PROJECT_DIR$/compress.py" />
-    </list>
+    <list default="true" id="d201db58-84b3-4cf2-a1e0-09dd98172ec9" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -13,21 +10,31 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/CFG_Compression$gui__1_.coverage" NAME="gui (1) Coverage Results" MODIFIED="1525844740133" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/CFG_Compression$gui__1_.coverage" NAME="gui (1) Coverage Results" MODIFIED="1525847194747" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/CFG_Compression$gui.coverage" NAME="gui Coverage Results" MODIFIED="1525288848532" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$USER_HOME$/Downloads" />
     <SUITE FILE_PATH="coverage/CFG_Compression$gui_2.coverage" NAME="gui-2 Coverage Results" MODIFIED="1525288873300" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$USER_HOME$/Downloads" />
     <SUITE FILE_PATH="coverage/CFG_Compression$Unnamed.coverage" NAME="Unnamed Coverage Results" MODIFIED="1524440710230" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="compress.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="compress.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/compress.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="246">
-              <caret line="114" column="23" lean-forward="false" selection-start-line="114" selection-start-column="23" selection-end-line="114" selection-end-column="23" />
+            <state relative-caret-position="234">
+              <caret line="129" column="28" lean-forward="true" selection-start-line="129" selection-start-column="28" selection-end-line="129" selection-end-column="28" />
               <folding>
                 <element signature="e#39#51#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -45,8 +52,8 @@
       <file leaf-file-name="Hash.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Hash.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="20" column="25" lean-forward="false" selection-start-line="20" selection-start-column="25" selection-end-line="20" selection-end-column="25" />
+            <state relative-caret-position="225">
+              <caret line="15" column="68" lean-forward="false" selection-start-line="15" selection-start-column="68" selection-end-line="15" selection-end-column="68" />
               <folding />
             </state>
           </provider>
@@ -71,8 +78,8 @@
         <option value="$USER_HOME$/Library/Containers/com.apple.mail/Data/Library/Mail Downloads/65798D0D-E8C2-42F4-B092-52B3775A6837/gui.py" />
         <option value="$PROJECT_DIR$/__init__.py" />
         <option value="$PROJECT_DIR$/LL.py" />
-        <option value="$PROJECT_DIR$/Hash.py" />
         <option value="$PROJECT_DIR$/compress.py" />
+        <option value="$PROJECT_DIR$/Hash.py" />
       </list>
     </option>
   </component>
@@ -252,7 +259,7 @@
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3376206" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3211297" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3368201" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3368201" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3587866" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -290,7 +297,7 @@
           <option name="timeStamp" value="75" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="145" />
+      <option name="time" value="154" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -408,19 +415,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Hash.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="20" column="25" lean-forward="false" selection-start-line="20" selection-start-column="25" selection-end-line="20" selection-end-column="25" />
+        <state relative-caret-position="225">
+          <caret line="15" column="68" lean-forward="false" selection-start-line="15" selection-start-column="68" selection-end-line="15" selection-end-column="68" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/compress.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="246">
-          <caret line="114" column="23" lean-forward="false" selection-start-line="114" selection-start-column="23" selection-end-line="114" selection-end-column="23" />
+        <state relative-caret-position="234">
+          <caret line="129" column="28" lean-forward="true" selection-start-line="129" selection-start-column="28" selection-end-line="129" selection-end-column="28" />
           <folding>
             <element signature="e#39#51#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
