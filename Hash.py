@@ -35,10 +35,10 @@ class HashTable:
             return True
 
     def get(self, key):
-        key_hash = self._get_hash(key)
-        if self.table[key_hash] is not None:
+        current = self.table[key]
+        if current is not None:
             # Might not work properly, might change
-            return key
+            return current
         return None
 
     def delete(self, key):

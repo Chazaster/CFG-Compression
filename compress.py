@@ -1,7 +1,6 @@
 # Chase Watson, Adam May, Matt Mulkeen
 import queue
 import math
-from LL import Node
 from LL import LinkedList
 from Hash import HashTable
 
@@ -121,24 +120,36 @@ def buildLL(string):
     return LL
 
 # Go through LL and add each pair to the hash table
-# Then have 2 separate functions:
-    # Function to handle number of times a pair is seen in the hash table
-    # Function to send those remaining pairs to the priority queue
-def buildPairs(LL, n, size):
+def buildPairs(LL):
     hash = HashTable()
     current = LL.start()
     next = LL._next(current)
-    i = 0
-    while (i != LL.__len__() - 1):
+    hashArray = []
+    for i in range(LL.__len__() - 1):
         temp = str(current) + str(next)
-        # This gets rid of useless and mysterious
-        # backslashes within the concatenated string
+        # This gets rid of useless and mysterious backslashes within the concatenated string
         pairs = temp[1:2] + temp[4:5]
+        # Get the hash value of each pair, store in array, and pass to populateQueue
+        hashValue = hash._get_hash(pairs)
+        hashArray.append(hashValue)
+        # Where we add all pairs to the hash table
         hash.add(pairs)
-        i += 1
         current = next
         next = LL._next(current)
-    return hash
+    return hash, hashArray
+
+# Now find the pairs that occur >= √n times and place in queue
+def populateQueue(hash, n, hashArray):
+    q = queue.Queue()
+    # Set removes any duplicates from the array, doing this because we
+    # get all entries of the same hash from the hash table
+    hashArray = list(set(hashArray))
+    for i in range (len(hashArray)):
+        temp = hashArray[i]
+        s = hash.get(temp)
+        if (len(s) >= n):
+            q.put(s)
+    return q
 
 def main():
     num = int(input("Enter 1 for Sequitur or 2 for Re-Pair: "))
@@ -158,11 +169,10 @@ def main():
             print(rule[0] + " -> " + rule[1])
 
     elif (num == 2):
-        size = len(str)
-        LL = buildLL(str)
         n = int(math.sqrt(len(str)))
-        hashTable = buildPairs(LL, n, size)
-        #queue = pairFrequency(pairs, n)
+        LL = buildLL(str)
+        hashTable, hashArray = buildPairs(LL)
+        q = populateQueue(hashTable, n, hashArray)
 
     else:
         print("Wrong number entered")
