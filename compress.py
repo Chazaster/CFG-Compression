@@ -111,55 +111,6 @@ def done(string):
     if len(pair) is not 0:
         return False
     return True
-'''
-# Function to create pairs from the inputted string
-def createPairs(string):
-    pairArray = []
-    for i in range (len(string) - 1):
-        pairArray.append(string[i] + string[i + 1])
-    return pairArray
-
-# Function that finds the number of times each pair occurs in the pairArray
-# The pairs generated in this function will be moved either to the priority queue or the hash table
-def pairFrequency(pairs, n):
-    # pairsArray will append a 1 each time a similar pair is seen,
-    # and will store a 0 if the pair hasn't been seen yet.
-    # This array will get reset each iteration through the loop
-    pairsArray = []
-    # frequencyArray will contain the frequency of each pair seen
-    freqeuncyArray = []
-    q = queue.Queue()
-    pairsSize = len(pairs)
-    for i in range (pairsSize):
-        temp = pairs[i]
-        # While looping through pairArray, save current pair in temp
-        # and loop through pairArray again to compare temp with other
-        # elements in the pairArray.
-        for j in range(pairsSize):
-            count = 0
-            # If we see a similar pair, count = 1 and append it to temp array
-            if temp == pairs[j]:
-                count += 1
-            # Otherwise append a 0 (meaning we didn't see the same pair)
-            pairsArray.append(count)
-
-        # Now we add up the total number of times we saw the pair
-        # by just totalling all the 1's in tempArray
-        size = len(pairsArray)
-        # Make sure tempArray is populated, if it isn't don't do anything
-        if size != 0:
-            total = 0
-            for k in range(size):
-                total += pairsArray[k]
-            freqeuncyArray.append(total)
-            del pairsArray[:]
-    # Now start appending pairs to hash table or priority queue
-    for i in range (pairsSize):
-        if (freqeuncyArray[i] >= n):
-            q.put(pairs[i])
-
-    return q
-'''
 
 # Use list comprehension to access values in individual tuples
 def buildLL(string):
@@ -172,11 +123,18 @@ def buildLL(string):
 # Then have 2 separate functions:
     # Function to handle number of times a pair is seen in the hash table
     # Function to send those remaining pairs to the priority queue
-def buildPairs(LL, n):
+def buildPairs(LL, n, size):
     hash = HashTable()
-    for i in range (len(LL) - 1):
-        pair = LL[i] + LL[i + 1]
-        hash.add(pair)
+    current = LL.start()
+    next = LL._next(current)
+    i = 0
+    while (i != LL.__len__() - 1):
+        temp = str(current) + str(next)
+        pairs = temp[:2] + temp[4:]
+        hash.add(pairs)
+        i += 1
+        current = next
+        next = LL._next(current)
     return hash
 
 def main():
@@ -197,10 +155,10 @@ def main():
             print(rule[0] + " -> " + rule[1])
 
     elif (num == 2):
+        size = len(str)
         LL = buildLL(str)
         n = int(math.sqrt(len(str)))
-        hashTable = buildPairs(LL, n)
-        #pairs = createPairs(str)
+        hashTable = buildPairs(LL, n, size)
         #queue = pairFrequency(pairs, n)
 
     else:

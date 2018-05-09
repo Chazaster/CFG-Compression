@@ -26,6 +26,16 @@ class LinkedList:
             current = current.next
         return '[' + ', '.join(nodes) + ']'
 
+    # Gets the length of the LL, similar to find; O(n) time
+    def __len__(self):
+        count = 0
+        current = self.head
+        while current:
+            count += 1
+            if current and current.data != None:
+                current = current.next
+        return count
+
     # Insert new element at the end of the LL; O(n) time
     def append(self, data):
         if not self.head:
@@ -67,3 +77,11 @@ class LinkedList:
         if not element:
             return
         self.removeElement(element)
+
+    # Get the head of the LL, used for traversals; O(1) time
+    def start(self):
+        return self.head
+
+    # Get the next value directly after head; O(1) time
+    def _next(self, key):
+        return key.next
