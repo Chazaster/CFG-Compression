@@ -136,6 +136,21 @@ def buildPairs(LL):
         hash.add(pairs)
         current = next
         next = LL._next(current)
+    hash, hashArray = deleteEntry(hash, hashArray)
+    return hash, hashArray
+
+def deleteEntry(hash, hashArray):
+    hashArray = list(set(hashArray))
+    size = len(hashArray)
+    i = 0
+    while i < size:
+        temp = hash.get(hashArray[i])
+        if (len(temp) <= 1):
+            hash.delete(cleanRule(temp))
+            hashArray.remove(hashArray[i])
+            size -= 1
+        else:
+            i += 1
     return hash, hashArray
 
 # Now find the pairs that occur >= √n times and place in priority queue
@@ -157,11 +172,10 @@ def populateQueue(hash, n, hashArray):
     return q, size
 
 def getPair(hash, queue, nonTerms, hashArray, size):
-    # NEEDS TO BE TESTED THOROUGHLY
     # If there is nothing in the queue, go through the hash table
     # finding the first pair without a non terminal
+    priority = False
     if queue.empty() and size >= 2:
-        priority = False
         hashArray = list(set(hashArray))
         for i in range(len(hashArray)):
             temp = hashArray[i]
@@ -215,6 +229,7 @@ def main():
             hashTable, hashArray = buildPairs(LL)
             q, size = populateQueue(hashTable, n, hashArray)
             if (q.empty() and size <= 1):
+
                 print()
                 print("Re-Pair Compression:")
                 print("S ->", str)

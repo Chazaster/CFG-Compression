@@ -47,5 +47,5 @@ class HashTable:
             return False
         else:
             # Similar to append, might change if add doesn't work
-            self.table[key_hash].pop(key)
+            self.table[key_hash].pop()
             return True
