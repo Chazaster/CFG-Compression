@@ -139,6 +139,8 @@ def buildPairs(LL):
     hash, hashArray = deleteEntry(hash, hashArray)
     return hash, hashArray
 
+# Used only when populating the hash table
+# Deletes all entries that have <= 1 occurrences of the pair
 def deleteEntry(hash, hashArray):
     hashArray = list(set(hashArray))
     size = len(hashArray)
@@ -175,20 +177,20 @@ def getPair(hash, queue, nonTerms, hashArray, size):
     # If there is nothing in the queue, go through the hash table
     # finding the first pair without a non terminal
     priority = False
-    if queue.empty() and size >= 2:
-        hashArray = list(set(hashArray))
+    if queue.empty():
         for i in range(len(hashArray)):
             temp = hashArray[i]
             s = hash.get(temp)
-            for i in range (len(s)):
-                for j in range (len(nonTerms)):
-                    if s[i] != nonTerms[j]:
-                        priority = True
-                    else:
-                        priority = False
-            if priority == True:
-                rule = cleanRule(s)
-                return rule
+            if (len(s) == size):
+                for i in range (len(s)):
+                    for j in range (len(nonTerms)):
+                        if s[i] != nonTerms[j]:
+                            priority = True
+                        else:
+                            priority = False
+                if priority == True:
+                    rule = cleanRule(s)
+                    return rule
     # If the queue is not empty, then take the first item in the priority queue
     else:
         item = queue.get()
@@ -196,6 +198,7 @@ def getPair(hash, queue, nonTerms, hashArray, size):
         return rule
 
 # Pulls out individual pair from passed hash table sublist
+# Removes gunk like comet on a toilet
 def cleanRule(rule):
     clean = ""
     i = 0
