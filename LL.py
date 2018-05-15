@@ -38,10 +38,13 @@ class LinkedList:
 
     # Insert new element at the end of the LL; O(n) time
     def append(self, data):
+        # If LL is empty, populate LL with head of input
         if not self.head:
             self.head = Node(data=data)
             return
+        # Set current to head of input
         current = self.head
+        # Now get next's data
         while current.next:
             current = current.next
         current.next = Node(data=data, prev=current)

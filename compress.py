@@ -389,8 +389,6 @@ def main():
         for term in linker:
             print(term)
 
-        return str, rules, grammarCode
-
     elif (num == 2):
         # Flag used to determine if we are using sequitur or repair in Huffman Encoding
         flag = True
@@ -432,7 +430,6 @@ def main():
                 print("Key: ")
                 for term in linker:
                     print(term)
-
                 return str, rules
 
             pair = getPair(hashTable, q, nonTerms, hashArray, size)
