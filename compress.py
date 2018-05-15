@@ -112,6 +112,7 @@ def done(string):
     return True
 
 # FUNCTIONS FOR RE-PAIR
+
 # Use list comprehension to access values and build LL
 def buildLL(string):
     LL = LinkedList()
@@ -125,7 +126,7 @@ def buildPairs(LL):
     current = LL.start()
     next = LL._next(current)
     hashArray = []
-    for i in range(LL.__len__() - 1):
+    for i in range(len(LL) - 1):
         temp = str(current) + str(next)
         # This gets rid of useless and mysterious backslashes within the concatenated string
         pairs = temp[1:2] + temp[4:5]
@@ -176,21 +177,15 @@ def populateQueue(hash, n, hashArray):
 def getPair(hash, queue, nonTerms, hashArray, size):
     # If there is nothing in the queue, go through the hash table
     # finding the first pair without a non terminal
-    priority = False
+    #priority = False
+    hashArray.sort()
     if queue.empty():
         for i in range(len(hashArray)):
             temp = hashArray[i]
             s = hash.get(temp)
             if (len(s) == size):
-                for i in range (len(s)):
-                    for j in range (len(nonTerms)):
-                        if s[i] != nonTerms[j]:
-                            priority = True
-                        else:
-                            priority = False
-                if priority == True:
-                    rule = cleanRule(s)
-                    return rule
+                rule = cleanRule(s)
+                return rule
     # If the queue is not empty, then take the first item in the priority queue
     else:
         item = queue.get()
@@ -208,14 +203,121 @@ def cleanRule(rule):
             i += 1
     return clean
 
+# FUNCTIONS FOR HUFFMAN ENCODING
+
+# Counts the # of unique symbols in input string, used for a in encoding process
+def symbolUniqueness(str, terms):
+    a = 0
+    for i in str:
+        for j in range (len(terms)):
+            if i == terms[j]:
+                a += 1
+                del terms[j]
+                break
+            else:
+                continue
+    return a
+
+# s = sum of # of symbols on right hand side of all rules
+# r = total # of rules
+# a = # of unique symbols in input string
+def grammarCodeSize(s, r, a):
+    # log2 calculates the log base 2 of r + a and is used
+    # to determine the size of each symbol's bit string
+    x = r + a
+    log2 = math.log(x, 2.0)
+    log = math.ceil(log2)
+    # temp stores the result of s + r - 1, used for size of gc
+    temp = s + r - 1
+    gcSize = temp * log
+    return gcSize, log
+
+# Counts the # of symbols on the right hand sides of the remaining grammar rules
+def sForSequitur(rules):
+    s = 0
+    temp = [rule[1] for rule in rules]
+    for i in range (len(temp)):
+        s += len(temp[i])
+    return s
+
+def buildTable(S, rules):
+    temp = []
+    for symbol in S:
+        temp.append(symbol)
+
+    rightSideRules = [rule[1] for rule in rules]
+    for rule in rightSideRules:
+        for symbol in rule:
+            temp.append(symbol)
+
+    cleanedTemp = list(set(temp))
+    lower = []
+    upper = []
+    for i in cleanedTemp:
+        if i.islower():
+            lower.append(i)
+        else:
+            upper.append(i)
+    lower.sort()
+    upper.sort()
+    symbolTable = lower + upper
+    return symbolTable
+
+def huffmanEncodingHelper(symbolTable, log):
+    count = 0
+    linker = []
+    padding = "{0:0" + str(log) + "b}"
+    for i in range(len(symbolTable)):
+        temp = [symbolTable[i], padding.format(i)]
+        linker.append(temp)
+        count += 1
+    linker.append(['#', padding.format(count)])
+    return linker
+
+def huffmanEncoding(linker, gcSize, S, rules):
+    gc = ""
+    temp = []
+    size = len(linker)
+    endMarker = linker[size - 1]
+    for i in range (len(S)):
+        for tuple in linker:
+            if tuple[0] == S[i]:
+                gc += tuple[1] + " "
+
+    gc += endMarker[1] + " "
+
+    rightSideRules = [rule[1] for rule in rules]
+    for rule in rightSideRules:
+        for symbol in rule:
+            temp.append(symbol)
+        temp.append(endMarker[1])
+    del temp[len(temp) - 1]
+
+    for i in range (len(temp)):
+        symbol = temp[i]
+        for tuple in linker:
+            if tuple[0] == symbol:
+                gc += tuple[1] + " "
+            elif symbol == endMarker[1]:
+                gc += endMarker[1] + " "
+                break
+
+    return gc
+
 def main():
     num = int(input("Enter 1 for Sequitur or 2 for Re-Pair: "))
     nonTerminals = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    nonTerms = []
-    for i in range(len(nonTerminals)):
-        nonTerms.append(nonTerminals[i])
+    nonTerms = [term for term in nonTerminals]
+    terminals = "abcdefghijklmnopqrstuvwxyz"
+    terms = [term for term in terminals]
     str = input("Enter a single string of any length using lowercase characters in the language {a - z}: ")
     rules = []
+    # Variable for total number of rules
+    r = 1
+    # Variable for sum of right hand sides
+    s = 0
+    # Variable for # of unique symbols in str
+    a = symbolUniqueness(str, terms)
 
     if (num == 1):
         S, rules = seq("", str, nonTerms, rules)
@@ -224,6 +326,17 @@ def main():
         print("S ->", S)
         for rule in rules:
             print(rule[0] + " -> " + rule[1])
+            r += 1
+        for i in S:
+            s += 1
+        s += sForSequitur(rules)
+        gcSize, log = grammarCodeSize(s, r, a)
+        symbolTable = buildTable(S, rules)
+        linker = huffmanEncodingHelper(symbolTable, log)
+        grammarCode = huffmanEncoding(linker, gcSize, S, rules)
+        print()
+        print("Encoded Grammar: " + grammarCode)
+        return str, rules, grammarCode
 
     elif (num == 2):
         for i in range (len(str)):
@@ -232,12 +345,12 @@ def main():
             hashTable, hashArray = buildPairs(LL)
             q, size = populateQueue(hashTable, n, hashArray)
             if (q.empty() and size <= 1):
-
                 print()
                 print("Re-Pair Compression:")
                 print("S ->", str)
                 for rule in rules:
                     print(rule)
+                    r += 1
                 return str, rules
             pair = getPair(hashTable, q, nonTerms, hashArray, size)
             rule = nonTerms[i] + " -> " + pair
