@@ -4,7 +4,10 @@ import math
 from LL import LinkedList
 from Hash import HashTable
 
-# FUNCTIONS FOR SEQUITUR
+##########################
+# FUNCTIONS FOR SEQUITUR #
+##########################
+
 def substring(string):
   if len(string) < 4:
     return ""
@@ -111,7 +114,9 @@ def done(string):
         return False
     return True
 
-# FUNCTIONS FOR RE-PAIR
+#########################
+# FUNCTIONS FOR RE-PAIR #
+#########################
 
 # Use list comprehension to access values and build LL
 def buildLL(string):
@@ -203,7 +208,9 @@ def cleanRule(rule):
             i += 1
     return clean
 
-# FUNCTIONS FOR HUFFMAN ENCODING
+##################################
+# FUNCTIONS FOR HUFFMAN ENCODING #
+##################################
 
 # Counts the # of unique symbols in input string, used for a in encoding process
 def symbolUniqueness(str, terms):
@@ -241,7 +248,8 @@ def sForSequitur(rules):
     return s
 
 # Builds list of unique symbols used on the right hand side of the rules
-def buildTable(S, rules):
+# Only works for Sequitur but calls symbolTable actually build the list
+def buildTableSequitur(S, rules):
     temp = []
     for symbol in S:
         temp.append(symbol)
@@ -251,6 +259,25 @@ def buildTable(S, rules):
         for symbol in rule:
             temp.append(symbol)
 
+    table = symbolTable(temp)
+    return table
+
+# Builds list of unique symbols used on the right hand side of the rules
+# Only works for Re-Pair but calls symbolTable actually build the list
+def buildTableRepair(S, rules):
+    temp = []
+    for symbol in S:
+        temp.append(symbol)
+
+    for rule in rules:
+        for symbol in rule:
+            temp.append(symbol)
+
+    table = symbolTable(temp)
+    return table
+
+# Does the bulk of work for the sequitur and repair symbol tables
+def symbolTable(temp):
     cleanedTemp = list(set(temp))
     lower = []
     upper = []
@@ -280,11 +307,12 @@ def huffmanEncodingHelper(symbolTable, log):
 # Does the dirty work for Huffman Encoding
 # Builds the binary string by sequentially looking
 # at the symbols on the right side of the rules
-def huffmanEncoding(linker, gcSize, S, rules):
+def huffmanEncoding(linker, gcSize, S, rules, flag):
     gc = ""
     temp = []
     size = len(linker)
     endMarker = linker[size - 1]
+
     for i in range (len(S)):
         for tuple in linker:
             if tuple[0] == S[i]:
@@ -292,7 +320,11 @@ def huffmanEncoding(linker, gcSize, S, rules):
 
     gc += endMarker[1] + " "
 
-    rightSideRules = [rule[1] for rule in rules]
+    if (flag == False):
+        rightSideRules = [rule[1] for rule in rules]
+    else:
+        rightSideRules = rules
+
     for rule in rightSideRules:
         for symbol in rule:
             temp.append(symbol)
@@ -309,6 +341,10 @@ def huffmanEncoding(linker, gcSize, S, rules):
                 break
     return gc
 
+#################
+# MAIN FUNCTION #
+#################
+
 def main():
     num = int(input("Enter 1 for Sequitur or 2 for Re-Pair: "))
     nonTerminals = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -317,6 +353,7 @@ def main():
     terms = [term for term in terminals]
     str = input("Enter a single string of any length using lowercase characters in the language {a - z}: ")
     rules = []
+    # Huffman Encoding variables:
     # Variable for total number of rules
     r = 1
     # Variable for sum of right hand sides
@@ -325,10 +362,15 @@ def main():
     a = symbolUniqueness(str, terms)
 
     if (num == 1):
+        # Flag used to determine if we are using sequitur or repair in Huffman Encoding
+        flag = False
+        # Start building grammar rules using Sequitur
         S, rules = seq("", str, nonTerms, rules)
         print()
         print("Sequitur Compression:")
         print("S ->", S)
+
+        # All functions and variable definitions for Huffman Encoding
         for rule in rules:
             print(rule[0] + " -> " + rule[1])
             r += 1
@@ -336,27 +378,63 @@ def main():
             s += 1
         s += sForSequitur(rules)
         gcSize, log = grammarCodeSize(s, r, a)
-        symbolTable = buildTable(S, rules)
+        symbolTable = buildTableSequitur(S, rules)
         linker = huffmanEncodingHelper(symbolTable, log)
-        grammarCode = huffmanEncoding(linker, gcSize, S, rules)
+        grammarCode = huffmanEncoding(linker, gcSize, S, rules, flag)
+
         print()
         print("Encoded Grammar: " + grammarCode)
+        print()
+        print("Key: ")
+        for term in linker:
+            print(term)
+
         return str, rules, grammarCode
 
     elif (num == 2):
+        # Flag used to determine if we are using sequitur or repair in Huffman Encoding
+        flag = True
+        # Start building grammar rules using Re-Pair
         for i in range (len(str)):
             n = int(math.sqrt(len(str)))
             LL = buildLL(str)
             hashTable, hashArray = buildPairs(LL)
             q, size = populateQueue(hashTable, n, hashArray)
+
+            # If we have reached the end of the input string
             if (q.empty() and size <= 1):
+                # temp holds right hand sides of all grammar rules
+                temp = []
                 print()
                 print("Re-Pair Compression:")
                 print("S ->", str)
                 for rule in rules:
                     print(rule)
                     r += 1
+
+                # Loops to finish calculating s
+                for i in str:
+                    s += 1
+                for item in rules:
+                    temp.append(item[5:])
+                for rule in temp:
+                    for symbol in rule:
+                        s += 1
+
+                gcSize, log = grammarCodeSize(s, r, a)
+                symbolTable = buildTableRepair(str, temp)
+                linker = huffmanEncodingHelper(symbolTable, log)
+                grammarCode = huffmanEncoding(linker, gcSize, str, temp, flag)
+
+                print()
+                print("Encoded Grammar: " + grammarCode)
+                print()
+                print("Key: ")
+                for term in linker:
+                    print(term)
+
                 return str, rules
+
             pair = getPair(hashTable, q, nonTerms, hashArray, size)
             rule = nonTerms[i] + " -> " + pair
             rules.append(rule)
