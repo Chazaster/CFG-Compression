@@ -240,6 +240,7 @@ def sForSequitur(rules):
         s += len(temp[i])
     return s
 
+# Builds list of unique symbols used on the right hand side of the rules
 def buildTable(S, rules):
     temp = []
     for symbol in S:
@@ -263,6 +264,8 @@ def buildTable(S, rules):
     symbolTable = lower + upper
     return symbolTable
 
+# Links a binary string to each unique symbol in the symbolTable
+# Alphabetically sortted from lowercase to uppercase
 def huffmanEncodingHelper(symbolTable, log):
     count = 0
     linker = []
@@ -274,6 +277,9 @@ def huffmanEncodingHelper(symbolTable, log):
     linker.append(['#', padding.format(count)])
     return linker
 
+# Does the dirty work for Huffman Encoding
+# Builds the binary string by sequentially looking
+# at the symbols on the right side of the rules
 def huffmanEncoding(linker, gcSize, S, rules):
     gc = ""
     temp = []
@@ -301,7 +307,6 @@ def huffmanEncoding(linker, gcSize, S, rules):
             elif symbol == endMarker[1]:
                 gc += endMarker[1] + " "
                 break
-
     return gc
 
 def main():
