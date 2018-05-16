@@ -49,13 +49,6 @@ class LinkedList:
             current = current.next
         current.next = Node(data=data, prev=current)
 
-    # Insert new element at the beginning of LL; O(n) time
-    def prepend(self, data):
-        new_head = Node(data=data, next=self.head)
-        if self.head:
-            self.head.prev = new_head
-        self.head = new_head
-
     # If data matches key, then return element. Else return None; O(n) time
     def find(self, key):
         current = self.head

@@ -3,6 +3,7 @@ import queue
 import math
 from LL import LinkedList
 from Hash import HashTable
+import time
 
 ##########################
 # FUNCTIONS FOR SEQUITUR #
@@ -362,6 +363,7 @@ def main():
     a = symbolUniqueness(str, terms)
 
     if (num == 1):
+        start = time.time()
         # Flag used to determine if we are using sequitur or repair in Huffman Encoding
         flag = False
         # Start building grammar rules using Sequitur
@@ -389,7 +391,11 @@ def main():
         for term in linker:
             print(term)
 
+        end = time.time()
+        print("Sequitur Runtime:", (end - start))
+
     elif (num == 2):
+        start = time.time()
         # Flag used to determine if we are using sequitur or repair in Huffman Encoding
         flag = True
         # Start building grammar rules using Re-Pair
@@ -430,6 +436,9 @@ def main():
                 print("Key: ")
                 for term in linker:
                     print(term)
+
+                end = time.time()
+                print("Re-Pair Runtime:", (end - start))
                 return str, rules
 
             pair = getPair(hashTable, q, nonTerms, hashArray, size)
