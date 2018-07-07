@@ -5,3 +5,6 @@ In order to compress a Context Free Grammar, the algorithms Sequitur and Re-Pair
 
 - Re-Pair: This method takes in a string input and repeatedly scans it checking for the highest frequency pairs. Once a pair is found, it adds a new rule for this pair and replaces the occurences of these pairs in the S rule. This algorithm utilizes a doubly Linked List for the input string, a Hash Table containing all pairs, and a Priority Queue containing all pairs that occur √n times.
 
+- 7/7/18:
+    - Now the Re-Pair algorithm supports large text files. It does not rely on 26 uppercase letters but instead now relies upon the 120,000+ unique characters in Unicode. Sequitur still relies on the 26 uppercase characters but will be changed soon.
+
