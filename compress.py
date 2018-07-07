@@ -4,6 +4,7 @@ import math
 from LL import LinkedList
 from Hash import HashTable
 import time
+import unicodedata
 
 ##########################
 # FUNCTIONS FOR SEQUITUR #
@@ -180,7 +181,7 @@ def populateQueue(hash, n, hashArray):
             size = len(s)
     return q, size
 
-def getPair(hash, queue, nonTerms, hashArray, size):
+def getPair(hash, queue, hashArray, size):
     # If there is nothing in the queue, go through the hash table
     # finding the first pair without a non terminal
     #priority = False
@@ -362,6 +363,9 @@ def main():
     # Variable for # of unique symbols in str
     a = symbolUniqueness(str, terms)
 
+
+
+    ### SEQUITUR CHOSEN ###
     if (num == 1):
         start = time.time()
         # Flag used to determine if we are using sequitur or repair in Huffman Encoding
@@ -394,7 +398,9 @@ def main():
         end = time.time()
         print("Sequitur Runtime:", (end - start))
 
+    ### RE-PAIR CHOSEN ###
     elif (num == 2):
+        unicodeStart = 33
         start = time.time()
         # Flag used to determine if we are using sequitur or repair in Huffman Encoding
         flag = True
@@ -441,11 +447,24 @@ def main():
                 print("Re-Pair Runtime:", (end - start))
                 return str, rules
 
-            pair = getPair(hashTable, q, nonTerms, hashArray, size)
-            rule = nonTerms[i] + " -> " + pair
+            pair = getPair(hashTable, q, hashArray, size)
+            decimal = unicodeStart + i
+            # Restrict certain symbols that are hard to decode:
+            # 0 - 33 (already restricted when variable initialized), 97 - 122, 127 - 159
+            if (decimal == 97):
+                decimal += 26
+            if (decimal == 127):
+                decimal += 33
+
+            unicodeSymbol = chr(decimal)
+            rule = unicodeSymbol + " -> " + pair
             rules.append(rule)
-            str = str.replace(pair, nonTerms[i])
+            str = str.replace(pair, unicodeSymbol)
 
     else:
+        start = 33
+        temp = chr(start)
+        print(temp)
         print("Wrong number entered")
+
 main()
