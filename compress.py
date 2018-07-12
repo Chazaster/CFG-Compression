@@ -1,4 +1,4 @@
-# Chase Watson, Adam May, Matt Mulkeen
+# Chase Watson
 import queue
 import math
 from LL import LinkedList

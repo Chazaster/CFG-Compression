@@ -1,4 +1,4 @@
-# Chase Watson, Adam May, Matt Mulkeen
+# Chase Watson
 
 class HashTable:
     def __init__(self):

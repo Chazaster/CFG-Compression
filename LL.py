@@ -1,4 +1,4 @@
-# Chase Watson, Adam May, Matt Mulkeen
+# Chase Watson
 
 class Node:
     def __init__(self, data=None, prev=None, next=None):
