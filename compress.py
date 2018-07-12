@@ -363,8 +363,6 @@ def main():
     # Variable for # of unique symbols in str
     a = symbolUniqueness(str, terms)
 
-
-
     ### SEQUITUR CHOSEN ###
     if (num == 1):
         start = time.time()
@@ -374,7 +372,7 @@ def main():
         S, rules = seq("", str, nonTerms, rules)
         print()
         print("Sequitur Compression:")
-        print("S ->", S)
+        print("Compressed ->", S)
 
         # All functions and variable definitions for Huffman Encoding
         for rule in rules:
@@ -400,7 +398,7 @@ def main():
 
     ### RE-PAIR CHOSEN ###
     elif (num == 2):
-        unicodeStart = 33
+        unicodeStart = 97
         start = time.time()
         # Flag used to determine if we are using sequitur or repair in Huffman Encoding
         flag = True
@@ -417,7 +415,7 @@ def main():
                 temp = []
                 print()
                 print("Re-Pair Compression:")
-                print("S ->", str)
+                print("Compressed ->", str)
                 for rule in rules:
                     print(rule)
                     r += 1
@@ -431,32 +429,26 @@ def main():
                     for symbol in rule:
                         s += 1
 
+                # Huffman Encoding function calls
+                '''
                 gcSize, log = grammarCodeSize(s, r, a)
                 symbolTable = buildTableRepair(str, temp)
                 linker = huffmanEncodingHelper(symbolTable, log)
                 grammarCode = huffmanEncoding(linker, gcSize, str, temp, flag)
-
+                
                 print()
                 print("Encoded Grammar: " + grammarCode)
                 print()
                 print("Key: ")
                 for term in linker:
                     print(term)
-
+                '''
                 end = time.time()
                 print("Re-Pair Runtime:", (end - start))
                 return str, rules
 
             pair = getPair(hashTable, q, hashArray, size)
-            decimal = unicodeStart + i
-            # Restrict certain symbols that are hard to decode:
-            # 0 - 33 (already restricted when variable initialized), 97 - 122, 127 - 159
-            if (decimal == 97):
-                decimal += 26
-            if (decimal == 127):
-                decimal += 33
-
-            unicodeSymbol = chr(decimal)
+            unicodeSymbol = chr(unicodeStart + i)
             rule = unicodeSymbol + " -> " + pair
             rules.append(rule)
             str = str.replace(pair, unicodeSymbol)
