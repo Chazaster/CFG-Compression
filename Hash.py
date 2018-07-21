@@ -29,8 +29,61 @@ class HashTable:
             # Might make list of a list of a list here, might change
             self.table[key_hash] = list([key_value])
             return True
-        # Collision handling done here
         else:
+            # Collision handling done here
+            # Check to see if items already in cell are same as current pair
+            for value in self.table[key_hash]:
+                # If true, append
+                if key_value == value:
+                    self.table[key_hash].append(key_value)
+                    return True
+                # If false, use linear probing to handle collisions
+                else:
+                    entrySize = 0
+                    new_value = []
+
+                    # To prevent out-of-range errors
+                    if key_hash == self.size - 1:
+                        new_hash = 0
+                    else:
+                        new_hash = key_hash + 1
+
+                    # Get size of entry in hash table
+                    for i in self.table[new_hash]:
+                        entrySize += 1
+                        new_value = [i[0]]
+
+                    # Check if value within the entry at new_hash is the same as the current key_value
+                    if key_value == new_value:
+                        self.table[new_hash].append(key_value)
+                        return True
+
+                    # If next hash table entry is empty, insert
+                    elif entrySize == 0:
+                        self.table[new_hash].append(key_value)
+                        return True
+
+                    # Otherwise, we continue through hash table until we find a match or empty entry
+                    else:
+                        while entrySize != 0:
+                            entrySize = 0
+
+                            if new_hash == self.size - 1:
+                                new_hash = 0
+                            else:
+                                new_hash += 1
+
+                            for i in self.table[new_hash]:
+                                entrySize += 1
+                                new_value = [i[0]]
+
+                            if key_value == new_value:
+                                self.table[new_hash].append(key_value)
+                                return True
+
+                        self.table[new_hash].append(key_value)
+                        return True
+
             self.table[key_hash].append(key_value)
             return True
 
@@ -41,11 +94,10 @@ class HashTable:
             return current
         return None
 
-    def delete(self, key):
-        key_hash = self._get_hash(key)
-        if self.table[key_hash] is None:
+    def delete(self, key, hash):
+        if self.table[hash] is None:
             return False
         else:
             # Similar to append, might change if add doesn't work
-            self.table[key_hash].pop()
+            self.table[hash].pop()
             return True

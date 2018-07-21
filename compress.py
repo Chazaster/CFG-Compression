@@ -4,7 +4,6 @@ import math
 from LL import LinkedList
 from Hash import HashTable
 import time
-import unicodedata
 
 ##########################
 # FUNCTIONS FOR SEQUITUR #
@@ -121,11 +120,14 @@ def done(string):
 #########################
 
 # Use list comprehension to access values and build LL
+# For now, i will be used as size variable; add size component to LL class later
 def buildLL(string):
+    size = 0
     LL = LinkedList()
     for i in range (len(string)):
         LL.append(string[i])
-    return LL
+        size += 1
+    return LL, size
 
 # Go through LL and add each pair to the hash table
 def buildPairs(LL):
@@ -156,7 +158,7 @@ def deleteEntry(hash, hashArray):
     while i < size:
         temp = hash.get(hashArray[i])
         if (len(temp) <= 1):
-            hash.delete(cleanRule(temp))
+            hash.delete(cleanRule(temp), hashArray[i])
             hashArray.remove(hashArray[i])
             size -= 1
         else:
@@ -405,7 +407,7 @@ def main():
         # Start building grammar rules using Re-Pair
         for i in range (len(str)):
             n = int(math.sqrt(len(str)))
-            LL = buildLL(str)
+            LL, LLSize = buildLL(str)
             hashTable, hashArray = buildPairs(LL)
             q, size = populateQueue(hashTable, n, hashArray)
 
@@ -430,33 +432,33 @@ def main():
                         s += 1
 
                 # Huffman Encoding function calls
-                '''
                 gcSize, log = grammarCodeSize(s, r, a)
                 symbolTable = buildTableRepair(str, temp)
                 linker = huffmanEncodingHelper(symbolTable, log)
                 grammarCode = huffmanEncoding(linker, gcSize, str, temp, flag)
-                
+
                 print()
                 print("Encoded Grammar: " + grammarCode)
                 print()
                 print("Key: ")
                 for term in linker:
                     print(term)
-                '''
+
+                # End timer and finish compression
                 end = time.time()
                 print("Re-Pair Runtime:", (end - start))
                 return str, rules
 
             pair = getPair(hashTable, q, hashArray, size)
-            unicodeSymbol = chr(unicodeStart + i)
+            unicodeValue = unicodeStart + i
+            unicodeSymbol = chr(unicodeValue)
+            print("Symbol: " + unicodeSymbol)
+            print(unicodeValue)
             rule = unicodeSymbol + " -> " + pair
             rules.append(rule)
             str = str.replace(pair, unicodeSymbol)
 
     else:
-        start = 33
-        temp = chr(start)
-        print(temp)
         print("Wrong number entered")
 
 main()
