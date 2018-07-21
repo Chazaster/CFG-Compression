@@ -400,7 +400,7 @@ def main():
 
     ### RE-PAIR CHOSEN ###
     elif (num == 2):
-        unicodeStart = 97
+        unicodeStart = 13056
         start = time.time()
         # Flag used to determine if we are using sequitur or repair in Huffman Encoding
         flag = True
@@ -432,28 +432,30 @@ def main():
                         s += 1
 
                 # Huffman Encoding function calls
-                gcSize, log = grammarCodeSize(s, r, a)
-                symbolTable = buildTableRepair(str, temp)
-                linker = huffmanEncodingHelper(symbolTable, log)
-                grammarCode = huffmanEncoding(linker, gcSize, str, temp, flag)
+                #gcSize, log = grammarCodeSize(s, r, a)
+                #symbolTable = buildTableRepair(str, temp)
+                #linker = huffmanEncodingHelper(symbolTable, log)
+                #grammarCode = huffmanEncoding(linker, gcSize, str, temp, flag)
 
                 print()
-                print("Encoded Grammar: " + grammarCode)
-                print()
-                print("Key: ")
-                for term in linker:
-                    print(term)
+                #print("Encoded Grammar: " + grammarCode)
+                #print()
+                #print("Key: ")
+                #for term in linker:
+                    #print(term)
 
                 # End timer and finish compression
                 end = time.time()
                 print("Re-Pair Runtime:", (end - start))
+                print("Final unicode value used: ")
+                print(unicodeValue)
                 return str, rules
 
             pair = getPair(hashTable, q, hashArray, size)
             unicodeValue = unicodeStart + i
             unicodeSymbol = chr(unicodeValue)
-            print("Symbol: " + unicodeSymbol)
-            print(unicodeValue)
+            if unicodeValue > 19893:
+                print("Reached blank in unicode symbols")
             rule = unicodeSymbol + " -> " + pair
             rules.append(rule)
             str = str.replace(pair, unicodeSymbol)

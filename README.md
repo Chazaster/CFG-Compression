@@ -6,6 +6,6 @@ To run, use python3. Choose which algorithm to use (Sequitur or Re-Pair) then in
 
 - Re-Pair: This method takes in a string input and repeatedly scans it checking for the highest frequency pairs. Once a pair is found, it adds a new rule for this pair and replaces the occurences of these pairs in the S rule. This algorithm utilizes a doubly Linked List for the input string, a Hash Table containing all pairs, and a Priority Queue containing all pairs that occur √n times.
 
-- 7/20/18:
-  Re-Pair now correctly handles hash collisions by using linear probing. Still some minor bugs with unicode symbols
+- 7/21/18:
+  Re-Pair now correctly handles hash collisions by using linear probing. Slightly larger input strings are supported now but gets hung on very large inputs.
 
