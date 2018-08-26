@@ -404,8 +404,9 @@ def main():
         start = time.time()
         # Flag used to determine if we are using sequitur or repair in Huffman Encoding
         flag = True
+        count = len(str)
         # Start building grammar rules using Re-Pair
-        for i in range (len(str)):
+        for i in range (count):
             n = int(math.sqrt(len(str)))
             LL, LLSize = buildLL(str)
             hashTable, hashArray = buildPairs(LL)
@@ -446,9 +447,15 @@ def main():
 
                 # End timer and finish compression
                 end = time.time()
+                compressedCount = len(str)
                 print("Re-Pair Runtime:", (end - start))
                 print("Final unicode value used: ")
                 print(unicodeValue)
+                print()
+                print("Length of original input string: ")
+                print(count)
+                print("Length of compressed input string: ")
+                print(compressedCount)
                 return str, rules
 
             pair = getPair(hashTable, q, hashArray, size)
