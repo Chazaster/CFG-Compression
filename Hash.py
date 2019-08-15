@@ -5,27 +5,23 @@ class HashTable:
         self.size = 256
         self.table = [[] for _ in range(self.size)]
 
-    # For the hashing function, we get the ASCII value of each
-    # character in the pair and mod that with the table size.
+    # For generating the hash value, we add the ASCII values of
+    # each character in the pair and mod that with the table size.
     # Since the Hash Table is initialized as a list of lists,
     # similar pairs would be mapped to the same entry in the table
     def _get_hash(self, key):
-        hash = 0
-        # To prevent 'be' and 'eb' from existing in the same sublist,
-        # we grab the ASCII value of the first element in the string
-        # and add it to the resulting hash value before it is modded
-        temp = ord(key[0])
-        for char in str(key):
-            hash += ord(char)
-        hash += temp
+        # To prevent 'be' and 'eb' from being mapped in the same sublist,
+        # we grab the ASCII value of the first character in the pair
+        # and add it twice along with the ASCII value of the second
+        # character before it is modded
+        hash = (ord(key[0]) * 2) + ord(key[1])
         return hash % self.size
 
-    def add(self, key):
+    def add(self, key, key_hash):
         # Get the index of the entry using the hash function
-        key_hash = self._get_hash(key)
         key_value = [key]
         # Check to see if the cell in the table is empty or not
-        if self.table[key_hash] is None:
+        if self.table[key_hash] == []:
             # Might make list of a list of a list here, might change
             self.table[key_hash] = list([key_value])
             return True
@@ -89,13 +85,13 @@ class HashTable:
 
     def get(self, key):
         current = self.table[key]
-        if current is not None:
+        if current != []:
             # Might not work properly, might change
             return current
         return None
 
     def delete(self, key, hash):
-        if self.table[hash] is None:
+        if self.table[hash] == []:
             return False
         else:
             # Similar to append, might change if add doesn't work
