@@ -1,7 +1,7 @@
 import math
 import time
 from repair import Repair
-#from sequitur import Sequitur
+from sequitur import Sequitur
 
 def runRepair(str, originalStr, rules, r):
     start = time.time()
@@ -53,8 +53,9 @@ def runSequitur(str, originalStr, rules, r):
     nonTerminals = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     nonTerms = [term for term in nonTerminals]
     # Sum of right hand sides
+    sequitur = Sequitur()
     sum = 0
-    S, rules = _seq('', str, nonTerms, rules)
+    S, rules = sequitur._seq('', str, nonTerms, rules)
     print()
     print("Sequitur Compression:")
     print("Compressed ->", S)
@@ -64,7 +65,7 @@ def runSequitur(str, originalStr, rules, r):
         r += 1
     for i in S:
         sum += 1
-    sum += _sForSequitur(rules)
+    sum += sequitur._sForSequitur(rules)
     end = time.time()
     print("Sequitur Runtime:", (end - start))
 
