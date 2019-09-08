@@ -1,5 +1,4 @@
 # Chase Watson
-
 class HashTable:
     def __init__(self):
         self.size = 256
