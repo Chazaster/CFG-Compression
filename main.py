@@ -41,9 +41,14 @@ def runRepair(str, originalStr, rules, r):
             print("Length of compressed input string: ", compressedStrSize)
             return str, rules
 
+        print('================================================')
+        print('ITERATION ', i, '/', originalStrSize)
         pair = repair._getPair(repair.hash, repair.q, hashArray, size)
+        print('   Pair: ', pair)
         unicodeSymbol = chr(unicodeValStart + i)
         rule = unicodeSymbol + " -> " + pair
+        print('   Rule: ', rule)
+        print()
         rules.append(rule)
         # Replace all pairs in input string with rule, then run re-pair over string with new rule
         str = str.replace(pair, unicodeSymbol)

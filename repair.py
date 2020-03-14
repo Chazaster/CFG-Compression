@@ -11,6 +11,7 @@ class Repair:
 
     # Use list comprehension to access values and build LL
     # For now, i will be used as size variable; add size component to LL class later
+    # @TODO - This is a bottleneck for larger strings since this is O(n), try to get to O(logn) or O(1)
     def _buildLL(self, string):
         for i in range (len(string)):
             self.LL.append(string[i])

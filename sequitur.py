@@ -2,7 +2,6 @@
 
 class Sequitur:
     def _seq(self, finalString, string, nonTerminals, rules):
-        # @TODO - move this function call to main
         if (string == '' and self._done(finalString)):
             rules = self._diagramUniqueness1(rules)
             rules = self._diagramUniqueness2(rules, nonTerminals)
@@ -13,7 +12,6 @@ class Sequitur:
             finalString += string[0]
             string = string[1:]
 
-        # @TODO - move this function call to main
         pair = self._substring(finalString)
         if (pair == ''):
             for rule, thing in rules:
@@ -99,7 +97,6 @@ class Sequitur:
         return rules
 
     def _done(self, string):
-        # @TODO - move this function call to main
         pair = self._substring(string)
         if (len(pair) is not 0):
             return False
